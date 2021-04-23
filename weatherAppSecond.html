@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="weatherAppSecond.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.1.1/dist/chart.min.js" defer></script>
+  <script src="weatherAppSecond.js" defer></script>
+  <title>Weather Application</title>
+</head>
+<body>
+  <div class="nav">
+    <input type="text" id="location" placeholder="Input a location here">
+    <button type="submit" id="submit">Submit</button>
+  </div>
+
+  <div id="weather-information">
+    <object data="/animated/01d.svg" id="icon"></object>
+    <p id="main"></p>
+    <p id="description"></p>
+    <p id="temperature"></p>
+    <p id="feels-like"></p>
+    <p id="minimum-temperature"></p>
+    <p id="maximum-temperature"></p>
+    <p id="humidity"></p>
+  </div>
+
+  <div id="chart-section">
+    <canvas id="chart" width="800" height="400"></canvas>
+  </div>
+</body>
+</html>
