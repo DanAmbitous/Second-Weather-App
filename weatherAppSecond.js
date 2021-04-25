@@ -89,8 +89,6 @@ const temperatureIdentifier = () => {
     
     celsius = true;
     unit = '°C';
-
-    console.log(unit);
   } else if (temperatureSelector.value === 'fahrenheit') {
     celsius = false;
     fahrenheit = false;
@@ -98,8 +96,6 @@ const temperatureIdentifier = () => {
 
     fahrenheit = true;
     unit = '°F';
-
-    console.log(unit);
   } else {
     celsius = false;
     fahrenheit = false;
@@ -107,13 +103,8 @@ const temperatureIdentifier = () => {
 
     kelvin = true;
     unit = 'K'
-
-    console.log(unit);
   }
 }
-
-console.log(countryFlagEmoji.get("US"));
-
 
 const flagAssignment = (data) => {
   document.querySelector('#country-flag').innerHTML = countryFlagEmoji.get(data.sys.country).emoji;
@@ -124,10 +115,14 @@ const weatherApi = async (apiLink) => {
   const responseFlow = await fetch(apiLink);
   const data = await responseFlow.json();
 
-  functionalites(data);
+  if (data.cod === "404") {
+    alert(`${data.cod} Error: Can't find the city of "${cityName}" in ${countryName}`);
+  } else {
+    functionalites(data);
+  }
 }
 
-weatherApi(apiLink);
+weatherApi(apiLink)
 
 // Runs a function on a click
 document.addEventListener('click', (event) => {
