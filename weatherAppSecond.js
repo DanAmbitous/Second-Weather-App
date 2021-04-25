@@ -4,56 +4,22 @@ const temperatureSelector = document.querySelector('#temperature-units');
 let unit;
 
 let cityName = 'london';
-let countryName = 'uk'
+let countryName = 'uk';
 
 // To determine which temperature unit to use
 let celsius = false;
 let fahrenheit = false;
 let kelvin = false;
 
-function temperatureChecker() {
-  if (temperatureSelector.value === 'celsius') {
-    celsius = false;
-    fahrenheit = false;
-    kelvin = false; 
-    
-    celsius = true;
-    unit = '°C';
-
-    console.log(unit);
-  } else if (temperatureSelector.value === 'fahrenheit') {
-    celsius = false;
-    fahrenheit = false;
-    kelvin = false; 
-
-    fahrenheit = true;
-    unit = '°F';
-
-    console.log(unit);
-  } else {
-    celsius = false;
-    fahrenheit = false;
-    kelvin = false; 
-
-    kelvin = true;
-    unit = 'K'
-
-    console.log(unit);
-  }
-}
-
-temperatureChecker();
+let chartDestroy = false;
 
 let apiLink = `http://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=469f04c0b3bc1ee6ca83abdfb8c7e6d3&units=metric`;
 
-// Contains the data in an array for the chart to graph
-let weatherData = [];
-
-// Graphs the data on a chart
 const graphing = (data) => {
   const { temp, feels_like, temp_min, temp_max } = data.main;
 
   let ctx = document.getElementById('chart').getContext('2d');
+
   new Chart(ctx, {
       type: 'bar',
       data: {
@@ -86,13 +52,32 @@ const graphing = (data) => {
   });
 }
 
+// Contains the data in an array for the chart to graph
+let weatherData = [];
+
+function dataArray(data) {
+  weatherData.length = 0;
+
+  const { temp, feels_like, temp_min, temp_max } = data.main;
+
+  weatherData.push(temp);
+  weatherData.push(feels_like);
+  weatherData.push(temp_min);
+  weatherData.push(temp_max);
+
+  console.table(weatherData);
+  
+  return weatherData;
+}
+
+// Graphs the data on a chart
+
+
 // Grabs the URL of the API and runs functions
 const weatherApi = async (apiLink) => {  
   const responseFlow = await fetch(apiLink);
   const data = await responseFlow.json();
   functionalites(data);
-
-  console.log(temperatureSelector.value);
 }
 
 weatherApi(apiLink);
@@ -103,7 +88,7 @@ document.addEventListener('click', (event) => {
 
   switch (elementId) {
     case "submit":
-      cityName = document.querySelector('#location').value;
+      cityName = document.querySelector('#city-name').value;
       apiLink = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=469f04c0b3bc1ee6ca83abdfb8c7e6d3&units=metric`;
       weatherApi(apiLink);
       break;
@@ -130,11 +115,68 @@ temperatureSelector.addEventListener('input', (event) => {
 })
 
 // Fills in the weather datas to the HTML elements
-function recordingData(data, unit) {
+function recordingData(data) {
   document.querySelector('object').setAttribute('data', `/animated/${data.weather[0].icon}.svg`)
   selectElementTemplate('main', data.weather[0].main);
   selectElementTemplate('description', data.weather[0].description)
   selectElementTemplate('humidity', data.main.humidity);
+}
+
+// Creates a template for assiging values to the HTML elements
+function selectElementTemplate(elementId, value) {
+  return document.querySelector(`#${elementId}`).textContent = value;
+}
+
+// Organizes the different sets of functions to be performed
+function functionalites(data) {
+  recordingData(data);
+  document.querySelector("#location-name").textContent = data.sys.country;
+  // dataArray(data);
+  temperatureIdentifier();
+  if (celsius) {
+    temperatureDataCelsius(data, unit);
+  } else if (fahrenheit) {
+    temperatureDataFarhenheit(data, unit);
+  } else {
+    temperatureDataKelvin(data, unit);
+  }
+  let chartDiv = document.querySelector('#chart-section');
+  chartDiv.innerHTML = "";
+  let canvas = document.createElement('canvas');
+  canvas.setAttribute('id', 'chart')
+  chartDiv.append(canvas);
+  graphing(data);
+}
+
+function temperatureIdentifier() {
+  if (temperatureSelector.value === 'celsius') {
+    celsius = false;
+    fahrenheit = false;
+    kelvin = false; 
+    
+    celsius = true;
+    unit = '°C';
+
+    console.log(unit);
+  } else if (temperatureSelector.value === 'fahrenheit') {
+    celsius = false;
+    fahrenheit = false;
+    kelvin = false; 
+
+    fahrenheit = true;
+    unit = '°F';
+
+    console.log(unit);
+  } else {
+    celsius = false;
+    fahrenheit = false;
+    kelvin = false; 
+
+    kelvin = true;
+    unit = 'K'
+
+    console.log(unit);
+  }
 }
 
 // If the value of the select element is celsius
@@ -159,23 +201,4 @@ function temperatureDataKelvin(data) {
   selectElementTemplate('feels-like', `${((data.main.feels_like + 273.15)).toFixed(2)} ${unit}`);
   selectElementTemplate('minimum-temperature', `${((data.main.temp_min + 273.15)).toFixed(2)} ${unit}`);
   selectElementTemplate('maximum-temperature', `${((data.main.temp_max + 273.15)).toFixed(2)} ${unit}`);
-}
-
-// Creates a template for assiging values to the HTML elements
-function selectElementTemplate(elementId, value) {
-  return document.querySelector(`#${elementId}`).textContent = value;
-}
-
-// Organizes the different sets of functions to be performed
-function functionalites(data) {
-  recordingData(data);
-  document.querySelector("#location-name").textContent = data.sys.country;
-  temperatureChecker();
-  if (celsius) {
-    temperatureDataCelsius(data, unit);
-  } else if (fahrenheit) {
-    temperatureDataFarhenheit(data, unit);
-  } else {
-    temperatureDataKelvin(data, unit);
-  }
 }
