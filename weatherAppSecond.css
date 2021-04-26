@@ -1,25 +1,62 @@
 :root {
-  --cardBackgroundColor: hsl(0, 0%, 100%);
+  --cardBackgroundColor: hsl(222, 100%, 78%);
+}
+
+#greater-weather-information {
+  display: flex;
+  text-align: center;
 }
 
 #weather-information {
   width: calc(100% - 50vw);
   margin: 0 auto;
   background: var(--cardBackgroundColor);
-  height: 415px;
+  height: 500px;
   padding:1vw;
   border-radius: 15px;
   text-align: center;
-  margin-bottom: 50vh;
+  margin-bottom: 10vh;
+  margin-top: 10vh;
+  box-shadow:0 0 5vw gray;
+}
+
+#greater-weather-information > button {
+  height: 500px;
+  margin-top: 10vh;
+  cursor: pointer;
+}
+
+#chart-section {
+  margin-bottom: 10vh;
 }
 
 #map { height: 90vh; }
 
-#chart-section {
-  margin-bottom: 50vh;
-}
-
 #country-flag {
   font-size: 5vw;
   margin: 0;
+}
+
+#navigation {
+  text-align: center;
+}
+
+#location-information {
+  display: none;
+}
+
+#solar-information {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  #navigation {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #country-flag {
+    font-size: 10vw;
+    margin: 0;
+  }
 }

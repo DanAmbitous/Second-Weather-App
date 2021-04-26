@@ -17,7 +17,7 @@
   <title>Weather Application</title>
 </head>
 <body>
-  <div class="navigation">
+  <div id="navigation">
     <input type="text" id="city-name" placeholder="City name goes here">
     <input type="text" id="country-name" placeholder="Country name goes here">
     <select name="temperature-units" id="temperature-units">
@@ -28,18 +28,49 @@
     <button type="submit" id="submit">Submit</button>
   </div>
 
-  <div id="weather-information">
-    <p id="country-flag"></p>
-    <h2>Temperature of <span id="location-name"></span></h2>
-    <object data="/animated/01d.svg" id="icon"></object>
-    <p>Main: <strong><span id="main"></span></strong></p>
-    <p>Description: <strong><span id="description"></span></strong></p>
-    <p>Temperature: <strong><span id="temperature"></span></strong></p>
-    <p>Feels Like: <strong><span id="feels-like"></span></strong></p>
-    <p>Minimum Temperature: <strong><span id="minimum-temperature"></strong></span></p>
-    <p>Maximum Temperature: <strong><span id="maximum-temperature"></strong></span></p>
-    <p>Humidity: <strong><span id="humidity"></strong></span></p>
+  <div id="greater-weather-information">
+    <button id="next"><</button>
+    <div id="weather-information">
+      <p id="country-flag"></p>
+      <h2>Temperature of <span id="location-name"></span></h2>
+      <object data="/animated/01d.svg" id="icon"></object>
+      <p>Main: <strong><span id="main"></span></strong></p>
+      <p>Description: <strong><span id="description"></span></strong></p>
+      <p>Temperature: <strong><span id="temperature"></span></strong></p>
+      <p>Feels Like: <strong><span id="feels-like"></span></strong></p>
+      <p>Minimum Temperature: <strong><span id="minimum-temperature"></strong></span></p>
+      <p>Maximum Temperature: <strong><span id="maximum-temperature"></strong></span></p>
+      <p>Humidity: <strong><span id="humidity"></strong></span></p>
+    </div>
+
+    <div id="location-information">
+      <p id="country-flag"></p>
+      <h2>Temperature of <span id="location-name"></span></h2>
+      <object data="/animated/01d.svg" id="icon"></object>
+      <p>Main: <strong><span id="main"></span></strong></p>
+      <p>Description: <strong><span id="description"></span></strong></p>
+      <p>Temperature: <strong><span id="temperature"></span></strong></p>
+      <p>Feels Like: <strong><span id="feels-like"></span></strong></p>
+      <p>Minimum Temperature: <strong><span id="minimum-temperature"></strong></span></p>
+      <p>Maximum Temperature: <strong><span id="maximum-temperature"></strong></span></p>
+      <p>Humidity: <strong><span id="humidity"></strong></span></p>
+    </div>
+
+    <div id="solar-information">
+      <p id="country-flag"></p>
+      <h2>Temperature of <span id="location-name"></span></h2>
+      <object data="/animated/01d.svg" id="icon"></object>
+      <p>Main: <strong><span id="main"></span></strong></p>
+      <p>Description: <strong><span id="description"></span></strong></p>
+      <p>Temperature: <strong><span id="temperature"></span></strong></p>
+      <p>Feels Like: <strong><span id="feels-like"></span></strong></p>
+      <p>Minimum Temperature: <strong><span id="minimum-temperature"></strong></span></p>
+      <p>Maximum Temperature: <strong><span id="maximum-temperature"></strong></span></p>
+      <p>Humidity: <strong><span id="humidity"></strong></span></p>
+    </div>
+    <button id="next">></button>
   </div>
+  
 
   <div id="chart-section">
     <canvas id="chart" width="800" height="400"></canvas>
